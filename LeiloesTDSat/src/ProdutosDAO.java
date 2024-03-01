@@ -32,7 +32,7 @@ public class ProdutosDAO {
             prep.setInt(2, produto.getValor());
             prep.setString(3, produto.getStatus());
             prep.executeUpdate();
-            conn.close();
+            
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "ERRO! Verifique os campos ou tente novamente mais tarde.");
@@ -40,7 +40,33 @@ public class ProdutosDAO {
     }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
-        
+        try{
+            conn = new conectaDAO().connectDB();
+            System.out.println("1");
+            String linha = "select * from produtos";
+            System.out.println("2");
+            
+            prep = conn.prepareStatement(linha);
+            System.out.println("3");
+            resultset = prep.executeQuery();
+            System.out.println("4");
+            
+            System.out.println("5");
+            
+            while(resultset.next()){
+                ProdutosDTO produto = new ProdutosDTO();
+                System.out.println("1");
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getInt("valor"));
+                produto.setStatus(resultset.getString("Status"));
+                
+                listagem.add(produto);
+                System.out.println("6");
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "ERRO! Tente novamente mais tarde.");
+        }
         return listagem;
     }
     
