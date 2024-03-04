@@ -70,6 +70,21 @@ public class ProdutosDAO {
         return listagem;
     }
     
+    public void venderProduto(int id){
+        try{
+            conn = new conectaDAO().connectDB();
+            String linha = "update produtos SET `status` = 'Vendido' where id = ?;";
+            
+            prep = conn.prepareStatement(linha);
+            prep.setInt(1, id);
+            prep.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "ERRO! Verifique os campos ou tente novamente mais tarde.");
+        }
+    }
+    
     
     
         
